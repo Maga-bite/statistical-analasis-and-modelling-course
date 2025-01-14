@@ -133,11 +133,6 @@ b=8:14
 M1=rbind(a,b)
 M1=cbind(a,b)
 
-rownames(M1)=c("A","B")
-colnames(M1)=c("1","2","3","4","5","6","7")
-#don't get why dosen't work
-
-
 
 #function to transpose the original matrix, i.e.inverting rows with columns:
 M2=t(M1)
