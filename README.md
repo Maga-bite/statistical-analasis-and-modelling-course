@@ -3,4 +3,4 @@ Repository for organizing and studying the use of statistics with R
 
 + Exercise
 + Examples
-+ And summaries of codes
++ Collections of usefull codes
