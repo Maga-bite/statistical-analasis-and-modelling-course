@@ -166,5 +166,46 @@ t.test(intake$pre,intake$post,paired=T)
 #EXERCISE***
 #let comment on the result of the paired test.
 #Then perform the test by omitting the “paired=T” option
-#What differences can bserve and why?
+#What differences can observe and why?
 #Finally perform the non-parametric version of the paired t-test.
+
+#don't know how to answer this
+
+
+
+
+
+#TESTS ON FACTORIAL VARIABLES: BINOMIAL TEST
+
+# variable that follows a binomial theoreticalprobability distribution
+
+#following example: 39 out of 215 randomly chosen
+#patients have asthma. We want to know if the probability of a random
+#patient of having asthma is 15%.
+
+binom.test(39,215,0.15)
+
+#EXERCISE***
+#Let us go back to an example similar to what we have used to
+#explain the cumulative distribution: 20 patients are administered
+#two different treatments, A and B, and they are asked which one
+#they prefer. 16 of them prefer treatment A. Is this enough to say that
+#A is the better treatment, or is the result given by chance? We had
+#concluded that the p-value associated with the null hypothesis was
+#0.59%.
+#Now, solve the same problem using the binom.test() function and
+#comment on the similarities or differences in results
+
+binom.test(16,20,0.0059)
+
+#The results of the binom.test() confirm the earlier findings, with a p-value 
+#of 0.0059 indicating that the preference for treatment A is unlikely to be 
+#due to chance. This test provides more detailed output, such as confidence 
+#intervals, making it a preferred method when exact calculations are needed.
+
+#TESTS ON FACTORIAL VARIABLES: PROPORTION TEST
+
+#extension of the binomial test approximated test (i.e., p-value and confidence
+#interval are approximated) with more flexibility.
+
+prop.test(39,215,0.15)
