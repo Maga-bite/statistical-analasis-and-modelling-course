@@ -198,7 +198,7 @@ binom.test(39,215,0.15)
 
 binom.test(16,20,0.0059)
 
-#The results of the binom.test() confirm the earlier findings, with a p-value 
+#The results of the binom.test() confirms the earlier findings, with a p-value 
 #of 0.0059 indicating that the preference for treatment A is unlikely to be 
 #due to chance. This test provides more detailed output, such as confidence 
 #intervals, making it a preferred method when exact calculations are needed.
@@ -209,3 +209,137 @@ binom.test(16,20,0.0059)
 #interval are approximated) with more flexibility.
 
 prop.test(39,215,0.15)
+
+#similar to that of the previously applied test; p-values
+#and confidence interval are also very similar, suggesting that the
+#approximation to normality, in this case, is appropriate enough
+
+#uses chi-square statistics with one degree of freedom
+
+#p-value and confidence interval
+# is computed on a specific reference distribution of the chi-squared
+#distribution, and this is then “translated” back into our starting variable
+
+# The advantage of the proportions test is that it can compare two series of 
+#experiments (even better, their respective probability distributions).
+
+#the null hypothesis is of equal probability of success, that is:
+
+#H0: p1 = p2
+#H1: p1 ≠ p2
+
+#EXAMPLE, we can consider two series of experiments of 12 and 13
+#replicates, respectively. The successes are 9 in the first experiment and
+#4 in the second experiment.
+
+#Is the probability of success for the two experiments similar?
+#we can try to answer this question using a proportions test.
+
+success=c(9,4)
+total=c(12,13)
+
+prop.test(success,total)
+
+
+#Normality approximation does not work with such small samples!
+#However, a solution does exist: the Fisher test (we will see it later on).
+
+#EXERCISE***
+#A scarlet fever epidemic struck the United States in 1874. On the
+#East coast, 210 out of 740 patients did not survive; on the West
+#coast, 120 out of 660 patients died. Is the probability the same?
+
+dead=c(210,120)
+total=c(740,660)
+
+prop.test(dead,total)
+
+
+#COMPARING TWO QUALITATIVE VARIABLES: CHI-SQUARE TEST AND FISHER TEST
+
+#applied to qualitative variables
+
+#the null hypothesis of complete INDEPENDENCE of the two variables under 
+#scrutiny, which we can imagine as a table or matrix's rows and columns.
+
+#Under the null hypothesis, we expect that the observed frequencies are
+#identical to the expected frequencies
+
+#data must be organized in a 2 by 2 matrix, 
+#using for example the “success/failure” information for the rows
+
+
+data=matrix(c(9,4,3,9),nrow=2)
+
+chisq.test(data)
+
+chisq.test(data)$exp
+#Chi-squared test and extracts the expected counts (frequencies) 
+#from the test result.
+
+#he $exp component specifically contains the expected frequencies 
+#for each cell in the contingency table (or for each 
+#observation in a goodness-of-fit test) under the null hypothesis.
+
+
+#chisq.test(data)$exp gives you the expected counts used 
+#to calculate the Chi-squared test statistic.
+#You can use this to compare observed counts (data) 
+#to expected counts ($exp) and understand how much they deviate.
+
+
+
+#Fisher’s test of the problematic dataset
+
+fisher.test(data)
+# Fisher’s test expresses the null
+#hypothesis and confidence interval in terms of ODDS RATIO, a statistics
+#corresponding to the ratio between the proportion of successes and
+#failures in the two experiments
+
+
+#EXERCISE 1***
+#Build the following contingency table in R:
+#Fair eyes Dark eyes
+#Fair hair 38 11
+#Dark hair 14 51
+#and test it using both Fisher’s test and the chi-square test.
+
+con_tab = matrix(c(38, 11, 14, 51), nrow=2, byrow = TRUE, 
+                 dimnames = list(Hair = c("Fair", "Dark"), Eyes = c("Fair", "Dark")))
+
+#matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE,
+#       dimnames = NULL)
+
+#logical. If FALSE (the default) the matrix is filled by columns, 
+#otherwise the matrix is filled by rows.
+
+chisq.test(con_tab)
+
+fisher.test(con_tab)
+
+#EXERCISE2***
+#Build the following contingency table in R and apply the
+#appropriate test:
+#0 1-150 151-300 >300
+#Married 241 652 1537 598
+#Prev.Married 36 46 38 21
+#Single 218 327 106 67
+
+con_tab2 = matrix(c(241, 652, 1537, 598, 36, 46, 38, 21,  218, 327, 106, 67), 
+                  nrow=3, byrow = TRUE, 
+                 dimnames = list(Status = c("Married", "Prev.Married", "Single"),
+                                 Income = c("0", "1-150", "151-300", ">300")))
+
+chisq.test(con_tab2)
+
+fisher.test(con_tab2)
+# Fisher's test cannot be applied here as it is computationally 
+#expensive for large tables.
+
+#chi_square_test$expected output is printed to verify that all 
+#expected frequencies are greater than 5 
+#(a requirement for the chi-square test to be valid).
+
+chisq.test(con_tab2)$exp
+#these are the expected values
