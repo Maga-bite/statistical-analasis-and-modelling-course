@@ -3,7 +3,7 @@
 # Plots usually appear in a dedicated window called
 #“R graphics device”; in RStudio
 
-##ONE QUALITATIVE VARIABLE: PIE CHART AND BARPLOT
+#ONE QUALITATIVE VARIABLE: PIE CHART AND BARPLOT
 
 #vector that corresponds to the summary of a
 #factorial variable, that is the absolute frequency of each state of the
@@ -113,72 +113,95 @@ hist(caleor, breaks=br,freq=F,main="Histogram of caleor",col="orange")
 #describes quantitative data variability by referring to their
 #quartiles as points of relevance. 
 
-----------------------------------------------------------------------
+#whiskers extend to include 95% of the data
 
 boxplot(caleor, main="Boxplot") # default
+
 boxplot(caleor,col=grey(0.8),main="Carapace Lengths",las=1) 
 # las changes orientation of axis numbers to horizontal
+
+# apply an extra secondary function:
 rug(caleor,side=2)
-# representation of the data distribution on side (counting clockwise from the bottom side)
+# adds representation of the data distribution on side (counting clockwise from the bottom side)
+
 boxplot(caleor,notch=T,col=grey(0.8),main="carapace lengths",las = 1)
-# Makes a notch at median witch the amplitude is proportional to variance of data
+# “notch=” Makes a notch at median witch the amplitude is proportional to variance of data
 # Good when comparing datasets, overlapping notch means similar data distribution
 
-# Exercise
+#EXERCISE***
+#Extract a different quantitative variable from the BLUE crabs.
+#Represent it with a histogram, also adding a density curve.
+#Represent it with a boxplot, adding notches and a rug.
+
+blueFL <- crabs$FL[crabs$sp=="B"]
+
+hist(blueFL, prob=TRUE, main="Histogram of frontal lobe size in blue crabs", col="dodgerblue2")
+lines(density(blueFL), col="firebrick1")
+
+boxplot(blueFL,notch=T,col="darkorchid2",main="frontal lobe size",las = 1)
+#RICORDA las METTE I NUMERI DRITTI 
+rug(blueFL,side=2)
+
+# Exercise another type of example
 blue <- crabs$RW[crabs$sp=="B"]
 hist(blue, prob=TRUE, main="Blue crab's RW", col="forestgreen")
 lines(density(blue), col="orange")
 boxplot(blue, notch=T, main="Boxplot of Blue Crab's RW", col="pink", las=1)
 
-## Scatterplot
+
+
+#SCATTERPLOT / MULTIFRAME
+
 # Two quantitative variables
+#most common graphical
+#representation of scientific data used to describe the relationship
+#between two quantitative variables belonging to the same set of subjects
 
 cawior <- crabs$CW[crabs$sp=="O"]
 plot(caleor, cawior)
+
+#just takes two vectors of the same length as quantitative data.
+#The first vector will be linked to the horizontal axis, the second to the
+#vertical axis; the points will be empty circles in the plot.
+
+#remember that the generalcharacteristics of the whole plot 
+#(e.g., overall size, size of the empty spaces etc.) 
+#have to be defined BEFORE using the plot() function.
 
 par(mfrow=c(1,3))
 plot(caleor, cawior)
 plot(cawior~caleor,col="red",main="Length and Width of carapaces")    
 plot(cawior~caleor,pch=20)    
 
-plot(cawior~caleor,main="Length and Width of 100 crabs", pch=20, xlab="length (in mm)",ylab="width (in mm)")
+#We can also play around on a scatterplot using a number of secondary
+#graphical functions to add more relevant elements.
+#Let’s start with a basic scatterplot:
+
+plot(cawior~caleor,main="Length and Width of 100 crabs", pch=20, 
+     xlab="length (in mm)",ylab="width (in mm)")
+
 abline(h=mean(cawior), lty=2, col=grey(0.6)) 
+# HORIZONTAL line passing through the average of the y variable
+
 abline(v=mean(caleor), lty=2, col=grey(0.6))  
+#adds a VERTICAL line passing through the average of the x variable
+
 # lty for the format of the line
 points(mean(caleor),mean(cawior),col="red",pch=20,cex=2)
 
 sexcol <- ifelse(crabs$sex=="F", "orange", "skyblue")  
+
 plot(cawior~caleor,main="Length and Width of 100 crabs", pch=20, col=sexcol, xlab="length (in mm)",ylab="width (in mm)")
 abline(h=mean(cawior), lty=2, col=grey(0.6)) 
 abline(v=mean(caleor), lty=2, col=grey(0.6))  
 points(mean(caleor),mean(cawior),col="red",pch=20,cex=2)
 
-# Exercise
-blue <- crabs$RW[crabs$sp=="B"]
-blueFL <- crabs$FL[crabs$sp=="B"]
-
-par(mfrow=c(1,3))
-plot(cawior~caleor, col="forestgreen", pch=17)
-plot(cawior~caleor, col="skyblue", pch=15,)
-abline(h=mean(cawior), col="orange")
-abline(v=mean(caleor), col="orange")
-plot(cawior~caleor, pch=3, col="red")
-points(mean(caleor), mean(cawior),pch=8, col="purple", cex=2 )
-
-# Boxplot
-# ONE quantitative + ONE qualitative variable
-
-sex <- crabs$sex[crabs$sp=="O"]
-par(mfrow=c(1,2))  
-par(mar=c(3,2,2,2))
-boxplot(caleor~sex) # quantitative ~ qualitative
-boxplot(caleor~sex,col=c("purple","green"),notch = T)
-
-# Exercise :
-Mcol <- crabs$sp[crabs$sex=="M"]
-MRW <- crabs$RW[crabs$sex=="M"]
-par(mar=c(3,2,2,2))
-boxplot(MRW ~ Mcol)
-
-
-
+#EXERCISE***
+#Choose two quantitative variables for the BLUE crabs.
+#Create a multiframe panel with three plots:
+#1) in the first one, the points are represented by green triangles
+#2) in the second one, the points are blue squares and the lines
+#passing through the means of the variables are orange; there
+#is no centroid here
+#3) in the third one, the points are red crosses and the centroid is
+#a purple asterisk; there are no lines here
