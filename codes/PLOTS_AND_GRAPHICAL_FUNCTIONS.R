@@ -205,3 +205,50 @@ points(mean(caleor),mean(cawior),col="red",pch=20,cex=2)
 #is no centroid here
 #3) in the third one, the points are red crosses and the centroid is
 #a purple asterisk; there are no lines here
+
+blue <- crabs$RW[crabs$sp=="B"]
+blueFL <- crabs$FL[crabs$sp=="B"]
+
+par(mfrow=c(3,1))
+
+plot(cawior~caleor, col="forestgreen", pch=17)
+
+plot(cawior~caleor, col="skyblue", pch=15,)
+abline(h=mean(cawior), col="orange")
+abline(v=mean(caleor), col="orange")
+
+plot(cawior~caleor, pch=3, col="red")
+points(mean(caleor), mean(cawior),pch=8, col="purple", cex=3 )
+
+
+#ONE QUALITATIVE AND ONE QUANTITATIVE VARIABLE
+# Boxplot
+
+#describe quantitative data
+#that are split in different groups on the basis of a qualitative variable
+
+
+orangesex <- crabs$sex[crabs$sp=="O"]
+
+par(mfrow=c(1,2))  
+par(mar=c(3,2,2,2))
+#series of numbers provided indicate the size of the margins starting
+#from the bottom and moving clockwise; the default values are c(5,4,4,2)
+
+boxplot(caleor~orangesex) # quantitative ~ qualitative
+#on the left side of the tilde, we can put the
+#QUANTITATIVE variable, while on the right side the QUALITATIVEvariable
+
+boxplot(caleor~orangesex,col=c("purple","green"),notch = T)
+
+# EXERCISE***
+#Produce a pair of boxplots for the MALE crabs, using the color as a
+#qualitative variable and rear width (RW) as the quantitative variable.
+
+Mcol <- crabs$sp[crabs$sex=="M"]
+MRW <- crabs$RW[crabs$sex=="M"]
+
+par(mar=c(10,7,7,4)) #smaller
+par(mar=c(3,2,2,2)) #bigger
+
+boxplot(MRW ~ Mcol)
