@@ -3,7 +3,7 @@
 # Plots usually appear in a dedicated window called
 #“R graphics device”; in RStudio
 
-#ONE QUALITATIVE VARIABLE: PIE CHART AND BARPLOT
+##ONE QUALITATIVE VARIABLE: PIE CHART AND BARPLOT
 
 #vector that corresponds to the summary of a
 #factorial variable, that is the absolute frequency of each state of the
