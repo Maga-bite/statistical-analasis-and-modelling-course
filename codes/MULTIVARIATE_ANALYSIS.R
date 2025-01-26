@@ -309,3 +309,107 @@ s.corcircle(pca1$c1,xax=1,yax=2)
 #analyse its relationship with the variables synthesized by the PCA.
 #Perform a simple linear regression analysis of SO2 with the first
 #two principal components and comment on the results
+
+names(data)
+
+first_comp <- pca1$li[,1]
+second_comp <- pca1$li[,2]
+
+mod=lm(data[, 1]~first_comp + second_comp, data=data)
+
+# View the summary of the regression model
+summary(mod)
+
+# Extract residuals and fitted values
+residuals <- resid(mod)
+fitted_values <- fitted(mod)
+
+# Output residuals and fitted values for further inspection
+print("Residuals:")
+print(residuals)
+
+print("Fitted Values:")
+print(fitted_values)
+
+
+
+
+########################## QUESTO è TUTTO IN PIù PER CURIOSITà
+
+
+
+#To plot the simple regression for SO2 against one of the principal components
+
+# Extract SO2 and the first principal component (PC1)
+SO2 <- data[, 1]  # Assuming SO2 is the first column in the dataset
+PC1 <- pca1$li[, 1]  # Scores for the first principal component
+
+# Fit a simple linear regression model
+simple_mod <- lm(SO2 ~ PC1)
+
+# Create the scatterplot
+plot(PC1, SO2, 
+     main = "Simple Regression: SO2 vs PC1", 
+     xlab = "PC1 Scores", 
+     ylab = "SO2 Concentration", 
+     pch = 16, 
+     col = "blue")
+
+# Add the regression line
+abline(simple_mod, col = "red", lwd = 2)
+
+
+
+###Model Equation and R² to the Plot
+
+# Add regression line and equation to the plot
+plot(PC1, SO2, 
+     main = "Simple Regression: SO2 vs PC1", 
+     xlab = "PC1 Scores", 
+     ylab = "SO2 Concentration", 
+     pch = 16, 
+     col = "blue")
+
+# Add the regression line
+abline(simple_mod, col = "red", lwd = 2)
+
+# Extract coefficients
+coeffs <- coef(simple_mod)
+eq <- paste0("y = ", round(coeffs[2], 2), "x + ", round(coeffs[1], 2))
+
+# Calculate R-squared
+r_squared <- summary(simple_mod)$r.squared
+r_squared_text <- paste0("R² = ", round(r_squared, 2))
+
+# Add text to the plot
+legend("topleft", legend = c(eq, r_squared_text), bty = "n", col = c("red", "black"))
+
+##########################################
+
+
+
+
+
+
+
+
+
+
+
+
+#DISTANCE MATRICES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
