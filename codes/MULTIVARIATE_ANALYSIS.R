@@ -9,8 +9,8 @@
 
 #######################################
 
-#do not work through stochastic methods and statistical
-#significance, but their aim is to provide a general outlook at the variability
+# does not work through stochastic methods and statistical
+#significance, but their aim is to provide a general outlook on the variability
 
 #STOCHASTIC or random process 
 #can be defined as a collection of random variables 
@@ -41,7 +41,7 @@
 
 #The transformation effectively works so that:
 
-#1) the new variables are ordered by proportion of explained variance
+#1) the new variables are ordered by the proportion of explained variance
 
 #2) the new variables are NOT correlated.
 
@@ -306,7 +306,7 @@ s.corcircle(pca1$c1,xax=1,yax=2)
 #EXERCISE***
 #  The variable SO2 was excluded by the previous computation: since
 #this is a relevant indicator of air pollution, it may be interesting to
-#analyse its relationship with the variables synthesized by the PCA.
+# analyze its relationship with the variables synthesized by the PCA.
 #Perform a simple linear regression analysis of SO2 with the first
 #two principal components and comment on the results
 
@@ -399,6 +399,52 @@ legend("topleft", legend = c(eq, r_squared_text), bty = "n", col = c("red", "bla
 
 #DISTANCE MATRICES
 
+#analysing a multivariate dataset of quantitative variables, it is often
+#useful to compute measures of distance between observations (the ROWS of the dataset) 
+#before applying other multivariate methods.
+
+#we are computing a POSITIVE value in a multi-dimensional
+#plane indicating how distant any two observations are based on the
+#available variables. 
+
+#If the distance is equal to zero, we are dealing with
+#two IDENTICAL variables with the same characteristics.
+
+#Once computed the distance among all pairs of observations the
+#collection of all distance measures will assume the form of a matrix
+
+#This matrix has specific characteristics:
+
+#1) it is a SQUARE matrix with an equal number of rows and columns,
+and the number of rows and columns is equal to the number of
+data observations;
+
+#2) the diagonal is made up of zeroes, because we are comparing
+each observation with itself;
+
+#3) the matrix is SYMMETRICAL with respect to the diagonal
+
+#In R, we can recover a default example for a triangular distance matrix:
+  
+data(eurodist)
+
+#and convert it from its triangular from to a square matrix:
+  
+eurodist.full=as.dist(eurodist,diag=T,upper=T)
+
+#as an example the dataset “cult.csv”, which contains data
+#relative to sociocultural variables for 10 American cities.
+
+cult=read.csv("cult.csv")
+
+#dataset has to be BALANCED OUT!
+  
+cult.std = scale(cult)
+cult.dist.q=dist(cult.std,diag=T,upper=T)
+
+#or
+
+cult.dist.t=dist(cult.std)
 
 
 
@@ -406,10 +452,80 @@ legend("topleft", legend = c(eq, r_squared_text), bty = "n", col = c("red", "bla
 
 
 
+#MULTIDIMENSIONAL SCALING
+
+#Multidimensional Scaling (MDS) is possibly the most used. 
+
+#it is a hypothesis-free method and exploratory analysis that
+#represents the data points in a two-dimensional space, trying to best fit
+#the multidimensional coordinates in a plane. 
+
+#two families of MDS.
+
+#############METRIC MDS transforms the distance matrix in a set of bidimensional
+#coordinates so that the original distance relationships between
+#observations are maintained at scale.
+
+###as an example the default dataset “swiss”, which contains
+#information on fertility and socioeconomic measures for 47 cities in
+#Switzerland for the year 1888.
+
+data(swiss)
+
+#We can balance out the dataset and compute the distance matrix:
+swiss.dist=dist(scale(swiss))
+
+#Then we can compute the metric MDS with the appropriate function:
+swiss.mds=cmdscale(swiss.dist)
+
+#The default output is a matrix containing coordinates for our
+#observations in a two-dimensional space
+
+#As with the PCA, we can proceed to a graphical rendition of the data:
+
+plot(swiss.mds,type="n")
+text(swiss.mds,labels=rownames(swiss))
+
+###The interpretation of the result is very similar to the PCA; 
+
+#it is important to keep in mind that the dimensions computed in the MDS
+#have EQUAL WEIGHT in the plot so they provide the same contribution
+#in explaining the variability of the final data distribution.
+
+#Also, there are no loadings, so it is impossible to “backtrack” which 
+#starting variables have contributed the most to each MDS dimension.
+
+###########NON-METRIC MDS starts from a metric computation of the MDS and
+#then tries to reduce a parameter called STRESS. 
+
+#The stress parameter
+#is a measure of how much the resulting configuration of the data points
+#DIFFERS from the original matrix and is essentially a measure of the
+#average difference in distance among the new points in space and
+#among the original points in space.
+
+#The most popular non-metric distance method is the Kruskal method,
+#which is implemented by the “isoMDS” function in the library MASS:
+
+library(MASS)
+
+swiss.kmds=isoMDS(swiss.dist)
+
+#The computation of the MDS measures is an iterative procedure that
+#stops when convergence is reached (that is, until it is impossible to
+#                                   change the stress parameter anymore).
+
+plot(swiss.kmds$points,type="n")
+text(swiss.kmds$points,labels=labels(swiss.dist))
+
+#The output of a non-metric MDS contains two values: a table of
+#measures (swiss.kmds$points) and a stress value (swiss.kmds$stress).
 
 
 
 
-
+####EXERCISE***
+#Apply the metric and non-metric MDS to the matrix “eurodist”. Plot
+#them by using the names of cities as labels.
 
 
