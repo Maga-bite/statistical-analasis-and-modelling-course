@@ -9,8 +9,8 @@
 
 #######################################
 
-# does not work through stochastic methods and statistical
-#significance, but their aim is to provide a general outlook on the variability
+#do not work through stochastic methods and statistical
+#significance, but their aim is to provide a general outlook at the variability
 
 #STOCHASTIC or random process 
 #can be defined as a collection of random variables 
@@ -41,7 +41,7 @@
 
 #The transformation effectively works so that:
 
-#1) the new variables are ordered by the proportion of explained variance
+#1) the new variables are ordered by proportion of explained variance
 
 #2) the new variables are NOT correlated.
 
@@ -306,7 +306,7 @@ s.corcircle(pca1$c1,xax=1,yax=2)
 #EXERCISE***
 #  The variable SO2 was excluded by the previous computation: since
 #this is a relevant indicator of air pollution, it may be interesting to
-# analyze its relationship with the variables synthesized by the PCA.
+#analyse its relationship with the variables synthesized by the PCA.
 #Perform a simple linear regression analysis of SO2 with the first
 #two principal components and comment on the results
 
@@ -528,4 +528,22 @@ text(swiss.kmds$points,labels=labels(swiss.dist))
 #Apply the metric and non-metric MDS to the matrix “eurodist”. Plot
 #them by using the names of cities as labels.
 
+# Load necessary libraries
+library(MASS)
 
+# Use the "eurodist" dataset, which contains road distances (in km) between 21 European cities.
+data(eurodist)
+
+# Metric MDS
+eurodist.mds <- cmdscale(eurodist)
+
+# Plot metric MDS
+plot(eurodist.mds, type = "n", main = "Metric MDS for eurodist")
+text(eurodist.mds, labels = labels(eurodist))
+
+# Non-Metric MDS using isoMDS
+eurodist.nmds <- isoMDS(eurodist)
+
+# Plot non-metric MDS
+plot(eurodist.nmds$points, type = "n", main = "Non-Metric MDS for eurodist")
+text(eurodist.nmds$points, labels = labels(eurodist))
