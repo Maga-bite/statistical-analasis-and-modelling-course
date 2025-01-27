@@ -11,7 +11,7 @@ Repository for organizing and studying the use of statistics with R
 
 ### **1. All functions used (in order of use, section by section)**  
 
----
+
 
 #### **01. Vectors, Matrices, and Dataframes**
 
