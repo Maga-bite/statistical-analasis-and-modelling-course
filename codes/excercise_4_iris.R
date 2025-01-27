@@ -7,7 +7,9 @@
 -------------------------------
 
 #COLORBLINDNESS FRIENDLY
-  
+
+#https://onlinelibrary.wiley.com/doi/full/10.1002/env.2877#env2877-bib-0011
+
 #install dichromat
 install.packages("dichromat")
 library(dichromat)
