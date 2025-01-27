@@ -85,6 +85,40 @@
 | `s.corcircle(pca_obj)` | `s.corcircle(pca_obj)`                           | Creates a correlation circle to represent the loadings of the principal components.                              |
 | `cmdscale(d, ...)`     | `cmdscale(dist(matrix(rnorm(20), nrow=5)), k=2)` | Performs metric Multidimensional Scaling (MDS) to represent distances in a two-dimensional space.                |
 | `dist(x, ...)`         | `dist(matrix(rnorm(20), nrow=5))`                | Calculates the distance matrix between observations.                                                            |
+---
+
+### **07. Cluster Analysis**
+
+#### **Complete Linkage Method**
+
+| **Function**             | **Example**                                              | **Explanation**                                                                                                                                |
+|--------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dist(x, ...)`           | `cow_dist = dist(scale(cow_numeric))`                    | Computes the distance matrix between observations.                                                                                            |
+| `hclust(d, method)`      | `cow_hc_complete = hclust(cow_dist, method = "complete")`| Performs hierarchical clustering using the "complete linkage" method, where the distance is the maximum between all possible pairs of clusters.|
+| `plot(object, ...)`      | `plot(cow_hc_complete)`                                  | Creates a dendrogram to visualize the hierarchical clustering results.                                                                         |
+| `rect.hclust(object, k)` | `rect.hclust(cow_hc_complete, k = 2, border = 2:3)`      | Adds colored rectangles to a dendrogram to highlight the defined clusters.                                                                    |
+| `cutree(tree, k)`        | `cow_hc_complete_groups = cutree(cow_hc_complete, k = 2)`| Divides the dendrogram into a specified number of clusters and returns the cluster memberships.                                                |
+| `table(x, y)`            | `table(cow$cla, cow_hc_complete_groups)`                 | Compares the obtained clusters with the original classification to evaluate clustering accuracy.                                               |
+
+#### **Average Linkage Method**
+
+| **Function**             | **Example**                                              | **Explanation**                                                                                                                                |
+|--------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hclust(d, method)`      | `cow_hc_average = hclust(cow_dist, method = "average")`  | Performs hierarchical clustering using the "average linkage" method, where the distance is the average between all cluster members.           |
+| `plot(object, ...)`      | `plot(cow_hc_average, labels = cow$cla, cex = 0.7)`      | Creates a dendrogram with labeled observations for visualizing the hierarchical clustering results.                                            |
+| `rect.hclust(object, k)` | `rect.hclust(cow_hc_average, k = 2, border = 2:3)`       | Adds rectangles to the dendrogram to show the selected clusters.                                                                               |
+| `cutree(tree, k)`        | `cow_hc_average_groups = cutree(cow_hc_average, k = 2)`  | Splits the dendrogram into a specified number of clusters.                                                                                     |
+| `table(x, y)`            | `table(cow$cla, cow_hc_average_groups)`                  | Compares the clustering results with the actual classifications.                                                                               |
+
+#### **Ward Method**
+
+| **Function**             | **Example**                                              | **Explanation**                                                                                                                                |
+|--------------------------|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `hclust(d, method)`      | `cow_hc_ward = hclust(cow_dist, method = "ward.D")`      | Performs hierarchical clustering using the "Ward" method, minimizing the total variance within clusters.                                       |
+| `plot(object, ...)`      | `plot(cow_hc_ward, labels = cow$cla, cex = 0.7)`         | Creates a dendrogram to represent the clustering structure with labeled observations.                                                          |
+| `rect.hclust(object, k)` | `rect.hclust(cow_hc_ward, k = 2, border = 2:3)`          | Adds rectangles to a dendrogram to highlight cluster divisions.                                                                               |
+| `cutree(tree, k)`        | `cow_hc_ward_groups = cutree(cow_hc_ward, k = 2)`        | Divides the Ward dendrogram into clusters based on the specified number of groups.                                                             |
+| `table(x, y)`            | `table(cow$cla, cow_hc_ward_groups)`                     | Evaluates the clustering performance by comparing clusters with original classifications.                                                      |
 
 ---
 
