@@ -41,7 +41,7 @@ iris_hc=hclust(iris_dist)
 #we know that the 150 samples have been assigned to
 #three different species:
 print(unique(iris_table$"Species"))
-
+species_names <- unique(iris_table$"Species")
 table(iris_table$"Species")
 
 #The species assigned are: "setosa", "versicolor", "virginica"
@@ -50,6 +50,32 @@ iris_labels = c(rep("setosa", 50), rep("versicolor", 50), rep("virginica", 50))
 
 plot(iris_hc, labels=iris_labels, main = "Dendrogram for Iris Dataset", xlab = "Species", ylab = "Height", cex=0.5)
 
+----------------------------------------
+  
+#FOR A BETTER DENDOGRAM
+
+# Install and load the dendextend package
+install.packages("dendextend")
+library(dendextend)
+
+# Convert to a dendrogram object
+dend <- as.dendrogram(iris_hc)
+
+# Assign labels to the dendrogram
+labels_colors(dend) <- c("red", "blue", "green")[iris$Species]
+
+# Color the branches based on the clusters
+dend <- color_branches(dend, k = 3, col = c("red", "blue", "green"))
+
+# Remove the labels
+labels(dend) <- NULL
+
+# Plot the customized dendrogram without labels
+par(mar = c(5, 4, 4, 6) + 0.1)  # Increase the right margin
+plot(dend, main = "Dendrogram for Iris Dataset", horiz = FALSE, las=1)
+legend("topright", inset = c(-0.25, 0), legend = species_names, fill = c("red", "blue", "green"), title = "Clusters", xpd = TRUE, cex = 0.6)
+
+----------------------------------------
 
 #This function produces a vector that defines the belonging to one of the 3 groups.
 iris_hc2=cutree(iris_hc,k=3)
