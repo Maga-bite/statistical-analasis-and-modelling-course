@@ -85,6 +85,7 @@ petal_lm <- lm(Petal.Width ~ Petal.Length, data = iris_table)
 # Linear regression for sepal length vs. sepal width
 sepal_lm <- lm(Sepal.Width ~ Sepal.Length, data = iris_table)
 
+par(mfrow = c(1, 2), oma = c(0, 0, 3, 0), mar = c(5, 4, 4, 2) + 0.1)
 
 # Plotting Petal Variables
 plot(iris$Petal.Length, iris$Petal.Width,
@@ -100,6 +101,9 @@ plot(iris$Sepal.Length, iris$Sepal.Width,
      main = "Sepal Length vs Width", 
      pch = 19, las=1, col = "gray69")
 abline(sepal_lm, col = "red3", lwd = 2)
+
+mtext("Linear regression", side = 3, outer = TRUE, 
+      line = -1, cex = 1.5) # Adds a title to the entire plotting area
 
 dev.off()
 
