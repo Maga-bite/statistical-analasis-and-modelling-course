@@ -49,7 +49,8 @@ par(mfrow = c(1, 2), oma = c(0, 0, 3, 0), mar = c(5, 4, 4, 2) + 0.1)
 plot(iris$Petal.Length, iris$Petal.Width, 
      col = species_colours_deutan[iris$Species], 
      pch = species_shapes[iris$Species], 
-     xlab = "Petal Length(cm)", ylab = "Petal Width(cm)", asp = 2,
+     xlab = "Petal Length(cm)", ylab = "Petal Width(cm)", 
+     asp = 2, las=1,
      main = "Petal Length vs Width")
 legend("topleft", legend = names(species_colours_deutan), 
        col = species_colours_deutan, 
@@ -58,7 +59,8 @@ legend("topleft", legend = names(species_colours_deutan),
 plot(iris$Sepal.Length, iris$Sepal.Width, 
      col = species_colours_deutan[iris$Species], 
      pch = species_shapes[iris$Species], 
-     xlab = "Sepal Length(cm)", ylab = "Sepal Width(cm)", asp = 2, 
+     xlab = "Sepal Length(cm)", ylab = "Sepal Width(cm)", 
+     asp = 2, las=1,
      main = "Sepal Length vs Width")  
 legend("topleft", legend = names(species_colours_deutan), 
        col = species_colours_deutan, 
@@ -72,7 +74,7 @@ mtext("Petal and Sepal Scatterplots", side = 3, outer = TRUE,
 #nherit the multi-panel layout.
 par(mfrow = c(1, 1))
 
-
+dev.off()
 
 
 #EXCERCISE 2
@@ -83,30 +85,23 @@ petal_lm <- lm(Petal.Width ~ Petal.Length, data = iris_table)
 # Linear regression for sepal length vs. sepal width
 sepal_lm <- lm(Sepal.Width ~ Sepal.Length, data = iris_table)
 
-# Plotting Petal Variables
-png("petal_scatterplot.png", width = 800, height = 600)
-plot(iris$Petal.Length, iris$Petal.Width,
-     xlab = "Petal Length", ylab = "Petal Width",
-     main = "Petal Length vs Width", pch = 19, col = "gray69")
-abline(petal_lm, col = "red3", lwd = 2)
-dev.off()
 
-# Display Petal Variables plot
+# Plotting Petal Variables
 plot(iris$Petal.Length, iris$Petal.Width,
      xlab = "Petal Length", ylab = "Petal Width",
-     main = "Petal Length vs Width", pch = 19, col = "gray69")
+     main = "Petal Length vs Width", 
+     pch = 19, las=1, col = "gray69")
 abline(petal_lm, col = "red3", lwd = 2)
 
 # Plotting Sepal Variables
 
-png("sepal_scatterplot.png", width = 800, height = 600)
 plot(iris$Sepal.Length, iris$Sepal.Width,
      xlab = "Sepal Length", ylab = "Sepal Width",
-     main = "Sepal Length vs Width", pch = 19, col = "gray69")
-abline(sepal_lm, col = "red3", lwd = 1)
+     main = "Sepal Length vs Width", 
+     pch = 19, las=1, col = "gray69")
+abline(sepal_lm, col = "red3", lwd = 2)
+
 dev.off()
-
-
 
 
 #EXCERCISE 3
@@ -120,7 +115,7 @@ par(mfrow = c(1, 2), oma = c(0, 0, 3, 0), mar = c(5, 4, 4, 2) + 0.1)
 qqplot.Petalwidth.pdf = qqnorm(Petal.Width, 
                                main = "Q-Q plot of Petal Width", 
                                col = "gray42", 
-                               asp=4,
+                               asp=4, las=1,
                                pch = 18)
 
 qqline(Petal.Width, col = "blue", lwd = 1)
@@ -128,13 +123,13 @@ qqline(Petal.Width, col = "blue", lwd = 1)
 qqplot.Sepalwidth.pdf = qqnorm(Sepal.Width, 
                                main = "Q-Q plot of Sepal Width", 
                                col = "gray42", 
-                               asp=4,
+                               asp=4, las=1,
                                pch = 18)
 
 qqline(Sepal.Width, col = "red", lwd = 2)
 
 mtext("Q-Q plot for sepal and petal width", side = 3, outer = TRUE, 
-        line = -1, cex = 1.5) # Adds a title to the entire plotting area
+      line = -1, cex = 1.5) # Adds a title to the entire plotting area
 ################################################################################
 
 #shapiro test
@@ -162,7 +157,7 @@ histo.Petal.Width.pdf = hist(Petal.Width,
                              main = "Histogram of Petal Width", 
                              freq = F, 
                              col = deutan[3],
-                             asp = 2,
+                             asp = 2, las=1,
                              xlab = "Petal Width")
 Pd = density(Petal.Width)
 lines(Pd, col = deutan[2])
@@ -174,7 +169,7 @@ histo.Sepal.Width.pdf = hist(Sepal.Width,
                              main = "Histogram of Sepal Width", 
                              freq = F, 
                              col = deutan[1], 
-                             asp = 2,
+                             asp = 2, las=1,
                              xlab = "Sepal Width")
 Sd = density(Sepal.Width)
 lines(Sd, col = deutan[2])
@@ -210,7 +205,7 @@ iris_hc = hclust(iris_dist)
 
 #the distance between pairs of clusters is defined as the
 #maximum value of all possible distances between elements of the two clusters.
-  
+
 #This function produces a vector that defines the belonging to one of the 3 groups.
 iris_clusters = cutree(iris_hc, k=3)
 
@@ -235,7 +230,8 @@ cluster_colors <- dichromat(c("red", "blue", "green"), type = "deutan")
 plot(iris$Petal.Length, iris$Petal.Width, 
      col = cluster_colors[iris_clusters], 
      pch = species_shapes[iris$Species], 
-     xlab = "Petal Length(cm)", ylab = "Petal Width(cm)", asp = 2,
+     xlab = "Petal Length(cm)", ylab = "Petal Width(cm)", 
+     asp = 2, las=1,
      main = "Clusters vs Petal Length and Width")
 
 legend("topleft", legend = unique(iris_clusters), 
