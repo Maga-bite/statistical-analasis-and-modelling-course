@@ -1,3 +1,5 @@
+#GITHUB FULL CODE FOR THE PLOTTING OF THE PRACTICAL EXERCISE 
+
 # Install and load necessary package
 install.packages("dichromat")
 library(dichromat)
@@ -111,9 +113,7 @@ dev.off()
 #EXCERCISE 3
 
 ################################################################################
-#I just modified the asp (aspect ratio) and the colorurs but at the end
-#I don't think we are required to do the q-q plot from the excercise 3
-
+# EXTRA, Testing the linearity of the q-q plot
 par(mfrow = c(1, 2), oma = c(0, 0, 3, 0), mar = c(5, 4, 4, 2) + 0.1)
 
 qqplot.Petalwidth.pdf = qqnorm(Petal.Width, 
